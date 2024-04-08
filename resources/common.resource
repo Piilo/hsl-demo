@@ -5,6 +5,12 @@ Variables    variables.py
 
 
 *** Keywords ***
+
+Suite teardown keywords
+    [Documentation]    todo
+    Clear API Sessions
+    Close Browser
+
 I Get Disruptions Data From API
     [Documentation]    todo
     VAR    &{query}    query={alerts {alertDescriptionText}}
