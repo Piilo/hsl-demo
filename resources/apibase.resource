@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Keywords for basic API usage
 Library    RequestsLibrary
-Variables    variables.py
+Variables    ./variables.py
 
 
 *** Keywords ***

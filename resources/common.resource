@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation    Common keywords
-Resource    apibase.resource
-Variables    variables.py
-
+Resource   ./apibase.resource
+Variables    ./variables.py
+Library    Browser
 
 *** Keywords ***
 
@@ -22,6 +22,10 @@ I Open HSL Web Page
     New Browser    ${BROWSER}    headless=false
     New Page       ${UI_URL}
     Get Title      ==    Reittiopas, liput ja hinnat, asiakaspalvelu | HSL.fi
+    ${Cookie_banner_visible}=    Run keyword and return status
+    ...    Get Element States    ${ACCCEPT_COOKIES_BTN}    contains    visible
+
+    IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
 
 I Navigate To Traffic Page
     [Documentation]    todo

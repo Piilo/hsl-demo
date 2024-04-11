@@ -1,8 +1,6 @@
 *** Settings ***
-Resource    resources/apibase.resource
-Resource    resources/common.resource
+Resource    ../resources/apibase.resource
 Resource    ../resources/common.resource
-Library   Browser
 
 Suite Setup    I Use Digitransit API
 Suite Teardown    Suite Teardown Keywords
