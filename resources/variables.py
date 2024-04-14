@@ -18,10 +18,13 @@ ACCCEPT_COOKIES_BTN = '//*[@id="coiConsentBannerBase"]/div/div/button[contains(t
 TRAFFIC_PAGE_HEADER = '//*[@id="main"]/div/div/div/div/h1[text()="Liikenne"]'
 SEARCH_ROUTE_INPUT = 'id=stop-route-station'
 DISRUPTION_ELEMENT = '//*/div[contains(text(), "+' + ALERT_TEXT + '")]'
+CHECKBOX_SHOW_ONLY_CURRENT_INFO = 'css=div.Toggle_switch__h84OX > input'
+#ROUTE_SEARCH_RESULT_CONTAINER = 'id=react-autowhatever-stop-route-station'
+ROUTE_SEARCH_RESULT_CONTAINER = '//*[@id="react-autowhatever-stop-route-station"]'
 
 
 
 
 # Query
 
-DISRUPTIONS_DATA_QUERY = '{alerts (route: ["${ROUTE_I_GTFSID}"] severityLevel: [WARNING]){alertDescriptionText}}'
+DISRUPTIONS_DATA_QUERY = '{alerts (route: ["' + ROUTE_I_GTFSID +'"] severityLevel: [WARNING]){alertDescriptionText}}'
