@@ -1,3 +1,4 @@
+import random
 
 BASE_URL = 'https://api.digitransit.fi'
 UI_URL = 'https://hsl.fi'
@@ -21,10 +22,14 @@ DISRUPTION_ELEMENT = '//*/div[contains(text(), "+' + ALERT_TEXT + '")]'
 CHECKBOX_SHOW_ONLY_CURRENT_INFO = 'css=div.Toggle_switch__h84OX > input'
 #ROUTE_SEARCH_RESULT_CONTAINER = 'id=react-autowhatever-stop-route-station'
 ROUTE_SEARCH_RESULT_CONTAINER = '//*[@id="react-autowhatever-stop-route-station"]'
-
+CITY_BIKES_BUTTON = '//a[@href="/kaupunkipyorat/helsinki"]'
+CITY_BIKE_VIEW_HEADER = 'main > div.Introduction_introductionContainer__CU96D > div > div > h1'
+GET_CITY_BIKE_STATIONS_BTN = '//a[@href="https://reittiopas.hsl.fi/lahellasi/CITYBIKE/POS"]'
+SELECT_DEPARTURE_POINT_MODAL = 'body > div.ReactModalPortal > div > div > div > div'
 
 
 
 # Query
 
 DISRUPTIONS_DATA_QUERY = '{alerts (route: ["' + ROUTE_I_GTFSID +'"] severityLevel: [WARNING]){alertDescriptionText}}'
+BIKE_AVAILABLE_QUERY = '{bikeRentalStation (id:"070") {station Id name bikesAvailable}}'
