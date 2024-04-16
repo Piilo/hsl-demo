@@ -1,26 +1,19 @@
 *** Settings ***
 Resource    ../resources/apibase.resource
 Resource    ../resources/common.resource
-
 Suite Setup    I Use Digitransit API
 Suite Teardown    Suite Teardown Keywords
 
 *** Test Cases ***
-First Case
-    [Documentation]    todo
-    Given I Open HSL Web Page
-    When I Get Disruptions Data From API For Route I
-    And I Navigate To Traffic Page
-    And I Search Traffic Info For Route I
-    #I Read All Exceptions From The UI
-    Then I See Disruptions Matches Between UI And API
-
 Check Available Bike Count Matchec Between UI And API
-    [Documentation]    todo
-    [Tags]    test
+    [Documentation]    Reads bike count for specific bike station from the API and UI
+    ...    and checks that bike count matches between UI and API.
+    [Tags]    bike
     Given I Open HSL Web Page
-
-    I Navigate To City Bike View
-    I Navigate To City Bike Station View
-    #When I Read Available Bike Count For Sammonpuistikko
+    And I Navigate To City Bike View
+    And I Get All Bike Stations From The API
+    When I Read Number of Available Bikes For The Bike Station "Mestarinkatu"
+    And I Go To City Bike Station View And Search Bike Station "Mestarinkatu"
+    And I Read Available Bike Count Value From UI
+    Then I see Available Bike count Matches Between UI And API
 
