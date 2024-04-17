@@ -7,6 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Execute tests
+        env:
+          DD_API_KEY: ${{secrets.DD_API_KEY}}
         run: robot -d results/    tests/tests.robot
       - name: Publish results
         uses: actions/upload-artifact@v4
