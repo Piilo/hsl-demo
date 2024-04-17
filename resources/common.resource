@@ -36,7 +36,7 @@ I Read Number of Available Bikes For The Bike Station "${bike_station}"
 
 I Open HSL Web Page
     [Documentation]    Open browser and open HSL web page. Allow cookies if asked.
-    New Browser    ${BROWSER}    headless=false
+    New Browser    ${BROWSER}    headless=true
     Set Browser Timeout    15s
     New Page    ${UI_URL}
     ${Cookie_banner_visible}=    Run Keyword And Return Status
