@@ -3,6 +3,7 @@ import random
 BASE_URL = 'https://api.digitransit.fi'
 UI_URL = 'https://hsl.fi'
 BROWSER = 'chromium'
+HEADLESS = 'true'
 
 #ROUTE_I_SHORT_NAME = 'I'
 #ROUTE_I_GTFSID = 'HSL:3001I'
@@ -29,6 +30,8 @@ SELECT_DEPARTURE_POINT_MODAL = 'body > div.ReactModalPortal > div > div > div > 
 DEPARTURE_POINT_INPUT = 'id=origin-stop-near-you'
 BIKE_STATION_SEARCH_RESULT_CONTAINER = 'id=react-autowhatever-origin-stop-near-you'
 AVAILABLE_BIKE_COUNT_LOCATOR = 'span.available-bikes'
+SEARCH_ROUTES_INPUT = 'id=stop-route-station'
+SEARCH_RESULTS_CONTAINER = 'id=react-autowhatever-stop-route-station'
 
 
 def BIKE_STATION_LIST_ITEM(station):
@@ -38,7 +41,9 @@ def BIKE_STATION_LIST_ITEM(station):
 def BIKE_STATION_LINK_LOCATOR(station):
     return  f'//h3[@class="stop-near-you-name" and text()="{station}"]/..'
 
-
+def SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(name):
+    return (f'//*[@id="react-autowhatever-stop-route-station"]//*'
+            + f'/div[@class="styles_suggestion-name__iADbo" and starts-with(text(),"{name}")]')
 
 # Query
 

@@ -1,5 +1,7 @@
 name: Robot Framework Tests
-on: [push]
+on:
+  schedule:
+    - cron:  '30 18 * * 2'
 jobs:
   test:
     runs-on: ubuntu-latest

@@ -32,17 +32,33 @@ I Read Number of Available Bikes For The Bike Station "${bike_station}"
             BREAK
         END
     END
-    IF    not ${found}    Fail    msg=Bike station "${bike_station}"" not found from API
+    IF    not ${found}    Fail    msg=Bike station "${bike_station}" not found from API
+
+I Search Routes Where Name Starts With "${name}" From The API
+    [Documentation]    Get all routes from API where name starts with given value and save routes to test variable.
+    ...    Parameters:
+    ...    ${name}= route name/part of the route name
+    VAR    &{query}    query= {routes(name: "${name}") {gtfsId shortName longName mode}}
+    ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
+    VAR    ${ROUTES_FROM_API}    ${res}[data][routes]    scope=TEST
 
 I Open HSL Web Page
     [Documentation]    Open browser and open HSL web page. Allow cookies if asked.
-    New Browser    ${BROWSER}    headless=true
+    New Browser    ${BROWSER}    headless=${HEADLESS}
     Set Browser Timeout    15s
     New Page    ${UI_URL}
     ${Cookie_banner_visible}=    Run Keyword And Return Status
     ...    Get Element States    ${ACCCEPT_COOKIES_BTN}    contains    visible
     IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
     Get Title    ==    ${HSL_TITLE}
+
+I Search Route, Stop Or Station With Name "${name}"
+    [Documentation]
+    Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
+    Keyboard Key    press    Enter
+    ${search_results} =    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
+    Log    ${search_results}
+    Sleep    2s
 
 I Navigate To City Bike View
     [Documentation]    Navigate to overall city bike view from the HSL front page

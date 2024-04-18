@@ -8,7 +8,7 @@ Suite Teardown    Suite Teardown Keywords
 Check Available Bike Count Matchec Between UI And API
     [Documentation]    Reads bike count for specific bike station from the API and UI
     ...    and checks that bike count matches between UI and API.
-    [Tags]    bike
+    [Tags]    bikes
     Given I Open HSL Web Page
     And I Navigate To City Bike View
     And I Get All Bike Stations From The API
@@ -17,3 +17,10 @@ Check Available Bike Count Matchec Between UI And API
     And I Read Available Bike Count Value From UI
     Then I see Available Bike count Matches Between UI And API
 
+Search Routes And Check Same Routes Can Be Found From UI And API
+    [Documentation]    Search routes from API and UI with specific name and
+    ...    check that results matches.
+    [Tags]    routes
+    Given I Open HSL Web Page
+    And I Search Routes Where Name Starts With "10" From The API
+    When I Search Route, Stop Or Station With Name "10"
