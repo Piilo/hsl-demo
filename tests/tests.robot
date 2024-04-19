@@ -22,5 +22,6 @@ Search Routes And Check Same Routes Can Be Found From UI And API
     ...    check that results matches.
     [Tags]    routes
     Given I Open HSL Web Page
-    And I Search Routes Where Name Starts With "10" From The API
-    When I Search Route, Stop Or Station With Name "10"
+    When I Search Routes Where Name Starts With "10" From The API
+    And I Search Route, Stop Or Station Where Name Starts With "10"
+    Then I See Routes Matching Between UI And API

@@ -38,7 +38,7 @@ I Search Routes Where Name Starts With "${name}" From The API
     [Documentation]    Get all routes from API where name starts with given value and save routes to test variable.
     ...    Parameters:
     ...    ${name}= route name/part of the route name
-    VAR    &{query}    query= {routes(name: "${name}") {gtfsId shortName longName mode}}
+    VAR    &{query}    query= {routes(name: "${name}") {shortName longName}}
     ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
     VAR    ${ROUTES_FROM_API}    ${res}[data][routes]    scope=TEST
 
@@ -52,13 +52,23 @@ I Open HSL Web Page
     IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
     Get Title    ==    ${HSL_TITLE}
 
-I Search Route, Stop Or Station With Name "${name}"
+I Search Route, Stop Or Station Where Name Starts With "${name}"
     [Documentation]
     Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
     Keyboard Key    press    Enter
     ${search_results} =    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
     Log    ${search_results}
-    Sleep    2s
+    VAR    @{ROUTES_FROM_UI}    scope=TEST
+    FOR    ${el}    IN    @{search_results}
+        ${short_name}=    Get Text    ${el}
+        ${split}    Split String    ${el}    >>
+        ${loc}=    Catenate    SEPARATOR=    ${split}[0]    /following-sibling::div
+        ${loc}    Catenate     ${loc}     >> ${split}[1]
+        ${long_name}=    Get text    ${loc}
+        VAR    &{names}    shortName=${short_name}    longName=${long_name}
+        Append to list    ${ROUTES_FROM_UI}    ${names}     
+    END
+    Log    ${ROUTES_FROM_UI}
 
 I Navigate To City Bike View
     [Documentation]    Navigate to overall city bike view from the HSL front page
@@ -89,55 +99,9 @@ I see Available Bike count Matches Between UI And API
     log    ${AVAILABLE_BIKE_COUNT_API}
     Should Be Equal As Strings    ${AVAILABLE_BIKE_COUNT_API}    ${AVAILABLE_BIKE_COUNT_UI}
 
-
-
-# obsolete
-
-#I Get Disruptions Data From API For Route I
-#    [Documentation]    Reads disruptions info from digitransit API for specific route
-#    VAR    &{query}    query=${DISRUPTIONS_DATA_QUERY}
-#    ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
-#    VAR    @{DISRUPTIONS_FROM_API}    scope=TEST
-#    FOR    ${item}    IN    @{res}[data][alerts]
-#        Log    ${item}[alertDescriptionText]
-#        #${disruption}=  Replace String    ${item}[alertDescriptionText]    \n    ${EMPTY}
-#        #Log    ${disruption}
-#        Append To List    ${DISRUPTIONS_FROM_API}    ${item}[alertDescriptionText]
-#    END
-
-#I Search Traffic Info For Route I
-#    [Documentation]    todo
-#    Wait For Elements State    ${SEARCH_ROUTE_INPUT}
-#    Fill Text    ${SEARCH_ROUTE_INPUT}    ${ROUTE_I_SHORT_NAME}
-#    Keyboard Key    press    Enter
-#    Wait For Elements State    ${ROUTE_SEARCH_RESULT_CONTAINER}    visible
-#    Keyboard Key    press    Enter
-#    Wait For Elements State    ${ROUTE_SEARCH_RESULT_CONTAINER}    hidden
-#    Uncheck Checkbox    ${CHECKBOX_SHOW_ONLY_CURRENT_INFO}
-#    Wait For Elements State    ${ROUTE_SEARCH_RESULT_CONTAINER}    unchecked
-#    #Sleep    10s
-#
-#I Read All Exceptions From The UI
-#    [Documentation]    todo remove??
-#    ${exceptions_UI}=    Get Elements      div.Exception_exceptionContentText__R5Y7V
-#    log    ${exceptions_UI}
-#    VAR    @{EXCEPTIONS_FROM_UI}    scope=TEST
-#    FOR    ${elem}    IN    @{exceptions_UI}
-#        ${text} =    Get Property    ${elem}    innerText
-#        ${text}=    Convert to String    ${text}
-#        Append to list    ${EXCEPTIONS_FROM_UI}   ${text}
-#    END
-#
-#
-#I See Disruptions Matches Between UI And API
-#    [Documentation]    Checks that disruption info from API can be found from the UI
-#    FOR    ${item}    IN    @{DISRUPTIONS_FROM_API}
-#        Wait For Elements State   //div[@class="Exception_exceptionContentText__R5Y7V" and contains(text(), "${item}")]    visible
-#        #List should contain value    ${EXCEPTIONS_FROM_UI}    ${item}
-#    END
-#
-#
-#I Navigate To Traffic Page
-#    [Documentation]    Navigate to HSL traffic page and verify that correct header is visible.
-#    Click    ${TRAFFIC_NOW_LINK}
-#    Wait For Elements State    ${TRAFFIC_PAGE_HEADER}    visible
+I See Routes Matching Between UI And API
+    [Documentation]
+    #Lists Should Be Equal    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}
+    FOR    ${route}    IN    @{ROUTES_FROM_API}
+        Log    ${route}
+    END
