@@ -5,6 +5,7 @@ Variables         ./variables.py
 Library           Browser
 Library    Collections
 Library    String
+Library    ./utils.py
 
 
 *** Keywords ***
@@ -68,6 +69,10 @@ I Search Route, Stop Or Station Where Name Starts With "${name}"
         VAR    &{names}    shortName=${short_name}    longName=${long_name}
         Append to list    ${ROUTES_FROM_UI}    ${names}     
     END
+    ### todo remove
+    #VAR    &{names_extra}    shortName=kissa    longName=koira
+    #Append to list    ${ROUTES_FROM_UI}    ${names_extra}
+    ###
     Log    ${ROUTES_FROM_UI}
 
 I Navigate To City Bike View
@@ -100,8 +105,9 @@ I see Available Bike count Matches Between UI And API
     Should Be Equal As Strings    ${AVAILABLE_BIKE_COUNT_API}    ${AVAILABLE_BIKE_COUNT_UI}
 
 I See Routes Matching Between UI And API
-    [Documentation]
-    #Lists Should Be Equal    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}
-    FOR    ${route}    IN    @{ROUTES_FROM_API}
-        Log    ${route}
-    END
+    [Documentation]    Checks if Searched routes from UI and API matches.
+    ...    Results from API should be first saved to test variable ROUTES_FROM_API 
+    ...    and results fom UI should be first saved to test variable ROUTES_FROM_UI
+    ${result}    Check list differences    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}    shortName
+    Log    ${result}
+    Should be Empty    ${result}    msg=Routes are not matching between UI and API: differences: ${result}

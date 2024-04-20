@@ -5,24 +5,13 @@ UI_URL = 'https://hsl.fi'
 BROWSER = 'chromium'
 HEADLESS = 'true'
 
-#ROUTE_I_SHORT_NAME = 'I'
-#ROUTE_I_GTFSID = 'HSL:3001I'
-#SAMMONPUISTIKKO_BIKE_STATION = 
-
 # UI texts
 
 HSL_TITLE = 'Reittiopas, liput ja hinnat, asiakaspalvelu | HSL.fi'
 
 # Locators
 
-#TRAFFIC_NOW_LINK = '//a[@title="Liikenne nyt"]'
 ACCCEPT_COOKIES_BTN = '//*[@id="coiConsentBannerBase"]/div/div/button[contains(text(), "Hyväksy kaikki")]'
-#TRAFFIC_PAGE_HEADER = '//*[@id="main"]/div/div/div/div/h1[text()="Liikenne"]'
-#SEARCH_ROUTE_INPUT = 'id=stop-route-station'
-#DISRUPTION_ELEMENT = '//*/div[contains(text(), "+' + ALERT_TEXT + '")]'
-#CHECKBOX_SHOW_ONLY_CURRENT_INFO = 'css=div.Toggle_switch__h84OX > input'
-#ROUTE_SEARCH_RESULT_CONTAINER = 'id=react-autowhatever-stop-route-station'
-#ROUTE_SEARCH_RESULT_CONTAINER = '//*[@id="react-autowhatever-stop-route-station"]'
 CITY_BIKES_BUTTON = '//a[@href="/kaupunkipyorat/helsinki"]'
 CITY_BIKE_VIEW_HEADER = 'main > div.Introduction_introductionContainer__CU96D > div > div > h1'
 GET_CITY_BIKE_STATIONS_BTN = '//a[@href="https://reittiopas.hsl.fi/lahellasi/CITYBIKE/POS"]'
