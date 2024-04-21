@@ -9,7 +9,7 @@ Variables           ./variables.py
 I Use Digitransit API
     [Documentation]    Initialies API session to Digitransit API
     VAR    &{headers}    digitransit-subscription-key=%{DD_API_KEY}    Content-Type=application/json
-    Create Session    session    ${BASE_URL}    ${headers}
+    Create Session    session    ${BASE_URL}    ${headers}    verify=True
 
 Clear API Sessions
     [Documentation]    Clear created API sessions
