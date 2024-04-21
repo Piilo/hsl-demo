@@ -1,3 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-/results/*
+/browser/*
+*log.html
+*output.xml
+*log.txt
+*report.html
+*.png
+

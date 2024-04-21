@@ -1,11 +1,13 @@
-from robot.api.deco import keyword
+"""Helper keywords and functions colelcted here"""
+
 from operator import itemgetter
+from robot.api.deco import keyword
 
 ROBOT_AUTO_KEYWORDS = False
 
 
 @keyword
-def Check_list_differences(list_1: list, list_2: list, key: str):
+def check_list_differences(list_1: list, list_2: list, key: str):
     """
     Compare givens lists containing dictionaries. Before comparison,
     sorts lists based on key having unique value, both lists should
@@ -28,12 +30,10 @@ def Check_list_differences(list_1: list, list_2: list, key: str):
     s_list_1, s_list_2 = sort_lists(list_1, list_2, key)
     try:
         pairs = zip(s_list_1, s_list_2, strict=True)
-        print('pairs', pairs)
         result = [(x, y) for x, y in pairs if x != y]
         return result
     except ValueError:
         return [s_list_1, s_list_2]
-    
 
 def sort_lists(list_1: list, list_2: list, key: str):
     """
@@ -61,7 +61,5 @@ def sort_lists(list_1: list, list_2: list, key: str):
         sorted_1, sorted_2 = [sorted(l, key=itemgetter(key))
                               for l in (list_1, list_2)]
         return sorted_1, sorted_2
-    except(KeyError):
-        raise KeyError(f'Key {key} is not suitable key for sorting')
-    
-    
+    except KeyError as e:
+        raise KeyError(f'Key {key} is not suitable key for sorting') from e

@@ -1,8 +1,10 @@
 *** Settings ***
-Resource    ../resources/apibase.resource
-Resource    ../resources/common.resource
-Suite Setup    I Use Digitransit API
-Suite Teardown    Suite Teardown Keywords
+Resource            ../resources/apibase.resource
+Resource            ../resources/common.resource
+
+Suite Setup         I Use Digitransit API
+Suite Teardown      Suite Teardown Keywords
+
 
 *** Test Cases ***
 Check Available Bike Count Matchec Between UI And API

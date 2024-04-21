@@ -1,11 +1,12 @@
 *** Settings ***
-Documentation     Common keywords
-Resource          ./apibase.resource
-Variables         ./variables.py
-Library           Browser
-Library    Collections
-Library    String
-Library    ./utils.py
+Documentation       Common keywords
+
+Resource            ./apibase.resource
+Variables           ./variables.py
+Library             Browser
+Library             Collections
+Library             String
+Library             ./utils.py
 
 
 *** Keywords ***
@@ -16,12 +17,12 @@ Suite Teardown Keywords
 
 I Get All Bike Stations From The API
     [Documentation]    Reads all bike stations from the API and saves response to test variable
-    VAR    &{query}    query=${BIKE_STATIONS_QUERY}
+    VAR    &{query}    query={bikeRentalStations {name stationId bikesAvailable}}
     ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
     VAR    ${BIKE_STATIONS_FROM_API}    ${res}[data][bikeRentalStations]    scope=TEST
 
 I Read Number of Available Bikes For The Bike Station "${bike_station}"
-    [Documentation]    Reads number of available bikes on given bike station and saves value to test variable.
+    [Documentation]    Reads number of available bikes for given bike station and saves value to test variable.
     ...    Parameters:
     ...    ${bike_station}= name of the bike station
     VAR    ${found}    False
@@ -33,12 +34,14 @@ I Read Number of Available Bikes For The Bike Station "${bike_station}"
             BREAK
         END
     END
-    IF    not ${found}    Fail    msg=Bike station "${bike_station}" not found from API
+    IF    not ${found}
+        Fail    msg=Bike station "${bike_station}" not found from API
+    END
 
 I Search Routes Where Name Starts With "${name}" From The API
     [Documentation]    Get all routes from API where name starts with given value and save routes to test variable.
     ...    Parameters:
-    ...    ${name}= route name/part of the route name
+    ...    ${name}= route name/beginning of the route name
     VAR    &{query}    query= {routes(name: "${name}") {shortName longName}}
     ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
     VAR    ${ROUTES_FROM_API}    ${res}[data][routes]    scope=TEST
@@ -48,31 +51,31 @@ I Open HSL Web Page
     New Browser    ${BROWSER}    headless=${HEADLESS}
     Set Browser Timeout    15s
     New Page    ${UI_URL}
-    ${Cookie_banner_visible}=    Run Keyword And Return Status
+    ${Cookie_banner_visible}    Run Keyword And Return Status
     ...    Get Element States    ${ACCCEPT_COOKIES_BTN}    contains    visible
     IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
     Get Title    ==    ${HSL_TITLE}
 
 I Search Route, Stop Or Station Where Name Starts With "${name}"
-    [Documentation]
+    [Documentation]    From the HSL front page search route, stop or station with
+    ...    given name or partial name starting with given string. Saves all search matches to list,
+    ...    for each route short name and long name is saved.
+    ...    Parameters:
+    ...    ${name}= Whole name of the route, or beginning of the name
     Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
     Keyboard Key    press    Enter
-    ${search_results} =    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
+    ${search_results}    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
     Log    ${search_results}
     VAR    @{ROUTES_FROM_UI}    scope=TEST
     FOR    ${el}    IN    @{search_results}
-        ${short_name}=    Get Text    ${el}
+        ${short_name}    Get Text    ${el}
         ${split}    Split String    ${el}    >>
-        ${loc}=    Catenate    SEPARATOR=    ${split}[0]    /following-sibling::div
-        ${loc}    Catenate     ${loc}     >> ${split}[1]
-        ${long_name}=    Get text    ${loc}
+        ${loc}    Catenate    SEPARATOR=    ${split}[0]    /following-sibling::div
+        ${loc}    Catenate    ${loc}    >> ${split}[1]
+        ${long_name}    Get text    ${loc}
         VAR    &{names}    shortName=${short_name}    longName=${long_name}
-        Append to list    ${ROUTES_FROM_UI}    ${names}     
+        Append to list    ${ROUTES_FROM_UI}    ${names}
     END
-    ### todo remove
-    #VAR    &{names_extra}    shortName=kissa    longName=koira
-    #Append to list    ${ROUTES_FROM_UI}    ${names_extra}
-    ###
     Log    ${ROUTES_FROM_UI}
 
 I Navigate To City Bike View
@@ -93,20 +96,22 @@ I Go To City Bike Station View And Search Bike Station "${bike_station}"
     Click    ${BIKE_STATION_LINK_LOCATOR("${bike_station}")}
 
 I Read Available Bike Count Value From UI
-    [Documentation]    Read and save to test variable available bike count
+    [Documentation]    Read and save to test variable available bike count from UI.
     ${bike_count}    Get text    ${AVAILABLE_BIKE_COUNT_LOCATOR}
     VAR    ${AVAILABLE_BIKE_COUNT_UI}    ${bike_count}    scope=TEST
-    Log    ${bike_count} ui
 
 I see Available Bike count Matches Between UI And API
-    [Documentation]    Check that number of available bikes ate same in the UI and API for same bike station
-    Log    ${AVAILABLE_BIKE_COUNT_UI} ui
-    log    ${AVAILABLE_BIKE_COUNT_API}
-    Should Be Equal As Strings    ${AVAILABLE_BIKE_COUNT_API}    ${AVAILABLE_BIKE_COUNT_UI}
+    [Documentation]    Check that number of available bikes are same in the UI and API for same bike station.
+    Log    ${AVAILABLE_BIKE_COUNT_UI} UI
+    log    ${AVAILABLE_BIKE_COUNT_API} API
+    Should Be Equal As Strings
+    ...    ${AVAILABLE_BIKE_COUNT_API}
+    ...    ${AVAILABLE_BIKE_COUNT_UI}
+    ...    msg=Bike count in UI and API did not match, UI: ${AVAILABLE_BIKE_COUNT_UI} != API: ${AVAILABLE_BIKE_COUNT_UI}
 
 I See Routes Matching Between UI And API
     [Documentation]    Checks if Searched routes from UI and API matches.
-    ...    Results from API should be first saved to test variable ROUTES_FROM_API 
+    ...    Results from API should be first saved to test variable ROUTES_FROM_API
     ...    and results fom UI should be first saved to test variable ROUTES_FROM_UI
     ${result}    Check list differences    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}    shortName
     Log    ${result}
