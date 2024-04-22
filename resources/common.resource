@@ -116,3 +116,8 @@ I See Routes Matching Between UI And API
     ${result}    Check list differences    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}    shortName
     Log    ${result}
     Should be Empty    ${result}    msg=Routes are not matching between UI and API: differences: ${result}
+
+Pass or Fail Randomly
+    [Documentation]    Keyword that passes or fails Randomly
+    ${val}    Evaluate    random.choice([True, False])
+    Should be True    ${val}

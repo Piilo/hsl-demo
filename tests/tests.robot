@@ -27,3 +27,8 @@ Search Routes And Check Same Routes Can Be Found From UI And API
     When I Search Routes Where Name Starts With "10" From The API
     And I Search Route, Stop Or Station Where Name Starts With "10"
     Then I See Routes Matching Between UI And API
+
+Flaky Tests Which Sometimes Passes And Sometimes Fails
+    [Documentation]    Just for demonstration purposes
+    [Tags]    random
+    Given Pass or Fail Randomly
