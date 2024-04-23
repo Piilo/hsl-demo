@@ -1,13 +1,18 @@
 name: Robot Framework Tests
 on:
   schedule:
-    - cron:  '30 18 * * 2'
+    - cron:  '43 15 * * 2'
 jobs:
   test:
     runs-on: ubuntu-latest
     container: ghcr.io/piilo/hsl-demo/ta_base_image:latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 21
       - name: Execute tests
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
@@ -17,4 +22,26 @@ jobs:
         with:
             name: reports
             path: results
-            retention-days: 7
+            retention-days: 14
+      - name: Load test report history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+      - name: Build test report
+        uses: simple-elf/allure-report-action@v1.9
+        if: always()
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: build/allure-results
+      - name: Publish test report
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+  
