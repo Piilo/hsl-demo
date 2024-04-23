@@ -17,7 +17,7 @@ jobs:
       - name: Run tests
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
-        run: robot -d results/    tests/tests.robot
+        run: robot -d results/ --listener allure_robotframework tests/tests.robot
       
       - name: Load test report history
         uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: build/allure-results
+          allure_results: output/allure
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v4
         if: always()
