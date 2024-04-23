@@ -1,7 +1,8 @@
 name: Robot Framework Tests
 on:
-  schedule:
-    - cron:  '56 15 * * *'
+  push:
+    branches:
+      - 'main'
 jobs:
   test:
     runs-on: ubuntu-latest
