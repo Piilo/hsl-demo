@@ -14,12 +14,13 @@ jobs:
         with:
           distribution: zulu
           java-version: 21
-      - name: Execute tests
+      - name: Run tests
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
         run: robot -d results/    tests/tests.robot
       - name: Publish results
         uses: actions/upload-artifact@v4
+        if: always()
         with:
             name: reports
             path: results
