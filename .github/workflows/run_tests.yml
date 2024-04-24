@@ -18,7 +18,6 @@ jobs:
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
         run: robot -d results/ --listener allure_robotframework:allure-results tests/tests.robot
-      
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
