@@ -1,5 +1,6 @@
 """Helper keywords and functions colelcted here"""
 
+import allure
 from operator import itemgetter
 from robot.api.deco import keyword
 
@@ -35,6 +36,7 @@ def check_list_differences(list_1: list, list_2: list, key: str):
     except ValueError:
         return [s_list_1, s_list_2]
 
+@allure.step('Sort lists')
 def sort_lists(list_1: list, list_2: list, key: str):
     """
     Sorts lists containing dictionaries based on given dictionary key. Key should be found
