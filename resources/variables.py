@@ -19,6 +19,7 @@ BIKE_STATION_SEARCH_RESULT_CONTAINER = 'id=react-autowhatever-origin-stop-near-y
 AVAILABLE_BIKE_COUNT_LOCATOR = 'span.available-bikes'
 SEARCH_ROUTES_INPUT = 'id=stop-route-station'
 SEARCH_RESULTS_CONTAINER = 'id=react-autowhatever-stop-route-station'
+SEARCH_RESULTS_CONTAINER_LIST = '//*[@id="react-autowhatever-stop-route-station"]/ul'
 
 def BIKE_STATION_LIST_ITEM(station):
     """Return UI locator for given bike station in the search result list"""

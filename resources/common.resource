@@ -1,11 +1,11 @@
 *** Settings ***
-Documentation       Common keywords
+Documentation       Common keywords for API and UI usage
 
 Resource            ./apibase.resource
 Variables           ./variables.py
-Library             Browser
 Library             Collections
 Library             String
+Library             Browser
 Library             ./utils.py
 
 
@@ -21,7 +21,7 @@ I Get All Bike Stations From The API
     ${res}    Post Data    ${BASE_URL}/routing/v1/routers/hsl/index/graphql    json=${query}
     VAR    ${BIKE_STATIONS_FROM_API}    ${res}[data][bikeRentalStations]    scope=TEST
 
-I Read Number of Available Bikes For The Bike Station "${bike_station}"
+I Read Number Of Available Bikes For The Bike Station "${bike_station}"
     [Documentation]    Reads number of available bikes for given bike station and saves value to test variable.
     ...    Parameters:
     ...    ${bike_station}= name of the bike station
@@ -56,27 +56,35 @@ I Open HSL Web Page
     IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
     Get Title    ==    ${HSL_TITLE}
 
+I Search Stop, Route Or Station With "${name}"
+    [Documentation]    Search stop, route or station with given name.
+    ...    Inputs the given name to search field and 'submits' search and verifies
+    ...    that search result container is visible. Fails if no search results found.
+    ...    Parameters:
+    ...    ${name}= Whole name of the route/stop/station, or part of the name
+    Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
+    Keyboard Key    press    Enter
+    Get Element States    ${SEARCH_RESULTS_CONTAINER_LIST}    contains    visible
+    ...    message=Did not find any routes/stops/stations with name "${name}"
+
 I Search Route, Stop Or Station Where Name Starts With "${name}"
     [Documentation]    From the HSL front page search route, stop or station with
     ...    given name or partial name starting with given string. Saves all search matches to list,
     ...    for each route short name and long name is saved.
     ...    Parameters:
     ...    ${name}= Whole name of the route, or beginning of the name
-    Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
-    Keyboard Key    press    Enter
+    I Search Stop, Route Or Station With "${name}"
     ${search_results}    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
-    Log    ${search_results}
-    VAR    @{ROUTES_FROM_UI}    scope=TEST
+    VAR    @{ROUTES_FROM_UI}    @{EMPTY}    scope=TEST
     FOR    ${el}    IN    @{search_results}
         ${short_name}    Get Text    ${el}
         ${split}    Split String    ${el}    >>
         ${loc}    Catenate    SEPARATOR=    ${split}[0]    /following-sibling::div
         ${loc}    Catenate    ${loc}    >> ${split}[1]
-        ${long_name}    Get text    ${loc}
+        ${long_name}    Get Text    ${loc}
         VAR    &{names}    shortName=${short_name}    longName=${long_name}
-        Append to list    ${ROUTES_FROM_UI}    ${names}
+        Append To List    ${ROUTES_FROM_UI}    ${names}
     END
-    Log    ${ROUTES_FROM_UI}
 
 I Navigate To City Bike View
     [Documentation]    Navigate to overall city bike view from the HSL front page
@@ -97,27 +105,26 @@ I Go To City Bike Station View And Search Bike Station "${bike_station}"
 
 I Read Available Bike Count Value From UI
     [Documentation]    Read and save to test variable available bike count from UI.
-    ${bike_count}    Get text    ${AVAILABLE_BIKE_COUNT_LOCATOR}
+    ${bike_count}    Get Text    ${AVAILABLE_BIKE_COUNT_LOCATOR}
     VAR    ${AVAILABLE_BIKE_COUNT_UI}    ${bike_count}    scope=TEST
 
-I see Available Bike count Matches Between UI And API
+I See Available Bike Count Matches Between UI And API
     [Documentation]    Check that number of available bikes are same in the UI and API for same bike station.
     Log    ${AVAILABLE_BIKE_COUNT_UI} UI
-    log    ${AVAILABLE_BIKE_COUNT_API} API
+    Log    ${AVAILABLE_BIKE_COUNT_API} API
     Should Be Equal As Strings
     ...    ${AVAILABLE_BIKE_COUNT_API}
     ...    ${AVAILABLE_BIKE_COUNT_UI}
-    ...    msg=Bike count in UI and API did not match, UI: ${AVAILABLE_BIKE_COUNT_UI} != API: ${AVAILABLE_BIKE_COUNT_UI}
+    ...    msg=Bike count in UI and API did not match, UI ${AVAILABLE_BIKE_COUNT_UI} != API ${AVAILABLE_BIKE_COUNT_UI}
 
 I See Routes Matching Between UI And API
     [Documentation]    Checks if Searched routes from UI and API matches.
     ...    Results from API should be first saved to test variable ROUTES_FROM_API
     ...    and results fom UI should be first saved to test variable ROUTES_FROM_UI
-    ${result}    Check list differences    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}    shortName
-    Log    ${result}
-    Should be Empty    ${result}    msg=Routes are not matching between UI and API: differences: ${result}
+    ${result}    Check List Differences    ${ROUTES_FROM_API}    ${ROUTES_FROM_UI}    shortName
+    Should Be Empty    ${result}    msg=Routes are not matching between UI and API: differences: ${result}
 
-Pass or Fail Randomly
-    [Documentation]    Keyword that passes or fails Randomly
+Pass Or Fail Randomly
+    [Documentation]    Keyword that passes or fails randomly
     ${val}    Evaluate    random.choice([True, False])
-    Should be True    ${val}
+    Should Be True    ${val}
