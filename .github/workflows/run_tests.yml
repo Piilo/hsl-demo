@@ -22,8 +22,8 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          echo "Browser=${{vars.BROWSER}}" > allure-results/environment.properties
-          Robot Framework: $(robot --version) >> allure-results/environment.properties
+          echo "Browser:${{vars.BROWSER}}" > allure-results/environment.properties
+          echo Robot Framework: $(robot --version) >> allure-results/environment.properties
           hostnamectl | grep "Operating System:" >> allure-results/environment.properties
       - name: Load test report history
         uses: actions/checkout@v4

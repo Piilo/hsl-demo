@@ -49,7 +49,7 @@ I Search Routes Where Name Starts With "${name}" From The API
 I Open HSL Web Page
     [Documentation]    Open browser and open HSL web page. Allow cookies if asked.
     New Browser    ${BROWSER}    headless=${HEADLESS}
-    Set Browser Timeout    15s
+    Set Browser Timeout    25s
     New Page    ${UI_URL}
     ${Cookie_banner_visible}    Run Keyword And Return Status
     ...    Get Element States    ${ACCCEPT_COOKIES_BTN}    contains    visible
