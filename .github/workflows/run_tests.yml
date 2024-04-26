@@ -4,7 +4,7 @@ on:
     branches:
       - 'main'
 jobs:
-  test:
+  Run_tests_and_create_report:
     runs-on: ubuntu-latest
     container: ghcr.io/piilo/hsl-demo/ta_base_image:latest
     steps:
@@ -22,9 +22,9 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          echo "Browser=${{vars.BROWSER}}" > allure-results/environment.properties \
-          robot --version >> allure-results/environment.properties \
-          grep -E '^(VERSION|NAME)=' /etc/os-release >> allure-results/environment.properties \
+          echo "Browser=${{vars.BROWSER}}" > allure-results/environment.properties
+          robot --version >> allure-results/environment.properties
+          grep -E '^(VERSION|NAME)=' /etc/os-release >> allure-results/environment.properties
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
