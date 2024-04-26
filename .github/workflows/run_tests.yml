@@ -14,10 +14,17 @@ jobs:
         with:
           distribution: zulu
           java-version: 21
-      - name: Run tests
+      - name: Run Robot Framework tests
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
-        run: robot -d results/ --listener allure_robotframework:allure-results tests/tests.robot
+        run: robot -d results/ -v BROWSER:${{vars.BROWSER}} --listener allure_robotframework:allure-results tests/tests.robot
+      - name: Save environment info
+        if: always()
+        continue-on-error: true
+        run: |
+          echo "Browser=${{vars.BROWSER}}" > allure-results/environment.properties \
+          robot --version >> allure-results/environment.properties \
+          grep -E '^(VERSION|NAME)=' /etc/os-release >> allure-results/environment.properties \
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
