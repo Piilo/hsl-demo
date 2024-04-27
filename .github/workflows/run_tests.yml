@@ -22,11 +22,10 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          echo "Browser=${{vars.BROWSER}}" > allure-results/environment.properties
-          echo Robot Framework= $(robot --version) >> allure-results/environment.properties
+          echo "Browser = ${{vars.BROWSER}}" > allure-results/environment.properties
+          echo Robot_Framework = $(robot --version) >> allure-results/environment.properties
           cat allure-results/environment.properties
-          source /etc/os-release
-          echo OS $(grep -E '^(VERSION|NAME)=' /etc/os-release) >> allure-results/environment.properties
+          echo OS = $(cat /etc/issue) >> allure-results/environment.properties
           cat allure-results/environment.properties
       - name: Load test report history
         uses: actions/checkout@v4
