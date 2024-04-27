@@ -1,4 +1,4 @@
-"""Helper keywords and functions colelcted here"""
+"""Helper keywords and functions collected here"""
 
 import allure
 from operator import itemgetter

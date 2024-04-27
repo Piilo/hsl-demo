@@ -59,7 +59,7 @@ I Open HSL Web Page
 I Search Stop, Route Or Station With "${name}"
     [Documentation]    Search stop, route or station with given name.
     ...    Inputs the given name to search field and 'submits' search and verifies
-    ...    that search result container is visible. Fails if no search results found.
+    ...    that search result container list is visible. Fails if no search results found.
     ...    Parameters:
     ...    ${name}= Whole name of the route/stop/station, or part of the name
     Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
@@ -72,7 +72,7 @@ I Search Route, Stop Or Station Where Name Starts With "${name}"
     ...    given name or partial name starting with given string. Saves all search matches to list,
     ...    for each route short name and long name is saved.
     ...    Parameters:
-    ...    ${name}= Whole name of the route, or beginning of the name
+    ...    ${name}= Whole name of the route/stop/station, or beginning of the name
     I Search Stop, Route Or Station With "${name}"
     ${search_results}    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
     VAR    @{ROUTES_FROM_UI}    @{EMPTY}    scope=TEST
@@ -93,7 +93,7 @@ I Navigate To City Bike View
 
 I Go To City Bike Station View And Search Bike Station "${bike_station}"
     [Documentation]    Navigate to city bike station view and search given bike station.
-    ...    Then navigate to given bike station view.
+    ...    Then navigate to bike station view of the given bike station.
     ...    Parameters:
     ...    ${bike_station}= Name of the bike station
     Click    ${GET_CITY_BIKE_STATIONS_BTN}
@@ -109,7 +109,7 @@ I Read Available Bike Count Value From UI
     VAR    ${AVAILABLE_BIKE_COUNT_UI}    ${bike_count}    scope=TEST
 
 I See Available Bike Count Matches Between UI And API
-    [Documentation]    Check that number of available bikes are same in the UI and API for same bike station.
+    [Documentation]    Check that number of available bikes are same in the UI and API for the same bike station.
     Log    ${AVAILABLE_BIKE_COUNT_UI} UI
     Log    ${AVAILABLE_BIKE_COUNT_API} API
     Should Be Equal As Strings

@@ -7,7 +7,7 @@ Variables           ./variables.py
 
 *** Keywords ***
 I Use Digitransit API
-    [Documentation]    Initialies API session to Digitransit API
+    [Documentation]    Initialies API session to Digitransit API, DD_API_KEY should be saved to environment variables.
     VAR    &{headers}    digitransit-subscription-key=%{DD_API_KEY}    Content-Type=application/json
     Create Session    session    ${BASE_URL}    ${headers}    verify=True
 
