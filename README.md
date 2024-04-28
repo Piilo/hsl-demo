@@ -30,13 +30,16 @@ Run tests with Allure, example:
 * [Generate allure report](https://allurereport.org/docs/robotframework/#3-generate-a-report)
 
 ### Run tests in Docker container
-Only allure-robotframework is included in the image, Allure and Java are not. 
+Note: Allure is not included in the image. 
 
 * [Install Docker](https://docs.docker.com/engine/install/)
 * In the root of project, build image: 
 
         sudo docker build -t <image-name-here> .
 * Run tests in the container:
+
+        sudo docker run -it --rm -e DD_API_KEY=$DD_API_KEY -v /path/to/hsl-demo:/hsl-demo test_base_image bash -c "robot -d /hsl-demo/results  -v BROWSER:chromium  /hsl-demo/tests"
+
 
 
 (© HSL 2024) & [Creative Commons BY 4.0 International Licence](https://creativecommons.org/licenses/by/4.0/)
