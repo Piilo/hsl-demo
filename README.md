@@ -4,6 +4,10 @@ HSL open API Robot Framework demo
 ## Purpose
 This is small example project showing how to use [HSL open data routing API](https://digitransit.fi/en/developers/), Robot Framework, Allure and GitHub Actions.
 
+## Allure report
+
+[Report can be found here](https://piilo.github.io/hsl-demo)
+
 ## Usage
 
 To be able to use the APIs, you need to register to [Digitransit](https://digitransit.fi/en/developers/api-registration/) and generate API key. API key should be saved to environment variable with name:
@@ -11,6 +15,7 @@ To be able to use the APIs, you need to register to [Digitransit](https://digitr
     DD_API_KEY
 
 ## Next steps:
+Examples are for linux (Ubuntu) environment
 
 ### Install everything to local environment:
 

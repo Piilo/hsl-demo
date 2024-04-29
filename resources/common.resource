@@ -1,12 +1,12 @@
 *** Settings ***
 Documentation       Common keywords for API and UI usage
 
-Resource            ./apibase.resource
-Variables           ./variables.py
 Library             Collections
 Library             String
 Library             Browser
 Library             ./utils.py
+Resource            ./apibase.resource
+Variables           ./variables.py
 
 
 *** Keywords ***
@@ -51,8 +51,10 @@ I Open HSL Web Page
     New Browser    ${BROWSER}    headless=${HEADLESS}
     Set Browser Timeout    25s
     New Page    ${UI_URL}
-    ${Cookie_banner_visible}    Run Keyword And Return Status
-    ...    Get Element States    ${ACCCEPT_COOKIES_BTN}    contains    visible
+    ${Cookie_banner_visible}    Run Keyword And Return Status    Get Element States
+    ...    ${ACCCEPT_COOKIES_BTN}
+    ...    contains
+    ...    visible
     IF    ${Cookie_banner_visible}    Click    ${ACCCEPT_COOKIES_BTN}
     Get Title    ==    ${HSL_TITLE}
 
@@ -64,7 +66,9 @@ I Search Stop, Route Or Station With "${name}"
     ...    ${name}= Whole name of the route/stop/station, or part of the name
     Fill Text    ${SEARCH_ROUTES_INPUT}    ${name}
     Keyboard Key    press    Enter
-    Get Element States    ${SEARCH_RESULTS_CONTAINER_LIST}    contains    visible
+    Get Element States    ${SEARCH_RESULTS_CONTAINER_LIST}
+    ...    contains
+    ...    visible
     ...    message=Did not find any routes/stops/stations with name "${name}"
 
 I Search Route, Stop Or Station Where Name Starts With "${name}"
@@ -73,9 +77,9 @@ I Search Route, Stop Or Station Where Name Starts With "${name}"
     ...    for each route short name and long name is saved.
     ...    Parameters:
     ...    ${name}= Whole name of the route/stop/station, or beginning of the name
+    VAR    @{ROUTES_FROM_UI}    @{EMPTY}    scope=TEST
     I Search Stop, Route Or Station With "${name}"
     ${search_results}    Get Elements    ${SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(${name})}
-    VAR    @{ROUTES_FROM_UI}    @{EMPTY}    scope=TEST
     FOR    ${el}    IN    @{search_results}
         ${short_name}    Get Text    ${el}
         ${split}    Split String    ${el}    >>
@@ -112,8 +116,7 @@ I See Available Bike Count Matches Between UI And API
     [Documentation]    Check that number of available bikes are same in the UI and API for the same bike station.
     Log    ${AVAILABLE_BIKE_COUNT_UI} UI
     Log    ${AVAILABLE_BIKE_COUNT_API} API
-    Should Be Equal As Strings
-    ...    ${AVAILABLE_BIKE_COUNT_API}
+    Should Be Equal As Strings    ${AVAILABLE_BIKE_COUNT_API}
     ...    ${AVAILABLE_BIKE_COUNT_UI}
     ...    msg=Bike count in UI and API did not match, UI ${AVAILABLE_BIKE_COUNT_UI} != API ${AVAILABLE_BIKE_COUNT_UI}
 
