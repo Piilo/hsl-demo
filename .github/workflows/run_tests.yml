@@ -5,7 +5,7 @@ on:
       - 'main'
     paths:
       - 'tests/tests.robot'
-      - 'resources/*'
+      - 'resources/**'
 jobs:
   Run_tests_and_create_report:
     runs-on: ubuntu-latest
