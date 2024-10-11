@@ -100,6 +100,7 @@ I Go To City Bike Station View And Search Bike Station "${bike_station}"
     ...    Then navigate to bike station view of the given bike station.
     ...    Parameters:
     ...    ${bike_station}= Name of the bike station
+    Click    ${HELSINKI_CITY_BIKES_BTN}
     Click    ${GET_CITY_BIKE_STATIONS_BTN}
     Wait For Elements State    ${SELECT_DEPARTURE_POINT_MODAL}    visible
     Fill Text    ${DEPARTURE_POINT_INPUT}    ${bike_station}

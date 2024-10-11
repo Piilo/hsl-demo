@@ -10,8 +10,9 @@ HSL_TITLE = 'Reittiopas, liput ja hinnat, asiakaspalvelu | HSL.fi'
 
 # UI Locators
 ACCCEPT_COOKIES_BTN = '//*[@id="coiConsentBannerBase"]/div/div/button[contains(text(), "Hyväksy kaikki")]'
-CITY_BIKES_BUTTON = '//a[@href="/kaupunkipyorat/helsinki"]'
-CITY_BIKE_VIEW_HEADER = '//*[@id="main"]/div/div/div/h1[starts-with(@class, "Introduction_title")]'
+CITY_BIKES_BUTTON = '//a[@href="/kaupunkipyorat"]'
+HELSINKI_CITY_BIKES_BTN = '//a[@href="https://www.hsl.fi/kaupunkipyorat/helsinki"]'
+CITY_BIKE_VIEW_HEADER = '//*[@id="main"]/div/h1[starts-with(@class, "CityBikesIntroduction")]'
 GET_CITY_BIKE_STATIONS_BTN = '//a[@href="https://reittiopas.hsl.fi/lahellasi/CITYBIKE/POS"]'
 SELECT_DEPARTURE_POINT_MODAL = 'body > div.ReactModalPortal > div > div > div > div'
 DEPARTURE_POINT_INPUT = 'id=origin-stop-near-you'

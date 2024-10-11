@@ -1,5 +1,5 @@
-robotframework==7.0
-robotframework-browser==18.3.0
-robotframework-requests==0.9.6
-robotframework-tidy==4.11.0
+robotframework==7.1
+robotframework-browser==18.9.1
+robotframework-requests==0.9.7
+robotframework-tidy==4.14.0
 allure-robotframework===2.13.5
