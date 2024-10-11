@@ -55,4 +55,4 @@ jobs:
         with:
             name: reports
             path: results
-            retention-days: 14
+            retention-days: 60
