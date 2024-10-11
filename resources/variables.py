@@ -3,7 +3,7 @@
 BASE_URL = 'https://api.digitransit.fi'
 UI_URL = 'https://hsl.fi'
 BROWSER = 'firefox'
-HEADLESS = 'false'
+HEADLESS = 'true'
 
 # UI texts
 HSL_TITLE = 'Reittiopas, liput ja hinnat, asiakaspalvelu | HSL.fi'
