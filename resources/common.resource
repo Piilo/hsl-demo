@@ -96,8 +96,8 @@ I Navigate To City Bike View
     Wait For Elements State    ${CITY_BIKE_VIEW_HEADER}    visible
 
 I Go To City Bike Station View And Search Bike Station "${bike_station}"
-    [Documentation]    Navigate to city bike station view and search given bike station.
-    ...    Then navigate to bike station view of the given bike station.
+    [Documentation]    Navigate to city bike station view of the Helsinki city bikes
+    ...    and search given bike station. Then navigate to bike station view of the given bike station.
     ...    Parameters:
     ...    ${bike_station}= Name of the bike station
     Click    ${HELSINKI_CITY_BIKES_BTN}
