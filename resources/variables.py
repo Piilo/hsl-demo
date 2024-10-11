@@ -2,7 +2,7 @@
 
 BASE_URL = 'https://api.digitransit.fi'
 UI_URL = 'https://hsl.fi'
-BROWSER = 'chromium'
+BROWSER = 'firefox'
 HEADLESS = 'true'
 
 # UI texts
