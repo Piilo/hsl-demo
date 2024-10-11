@@ -35,4 +35,3 @@ def SEARCH_RESULT_ITEMS_STARTING_WITH_NAME(name):
     """Return UI locator for route starting with given name in the search result list"""
     return ('//*[@id="react-autowhatever-stop-route-station"]//*'
             + f'/div[@class="styles_suggestion-name__iADbo" and starts-with(text(),"{name}")]')
-

@@ -20,6 +20,7 @@ jobs:
       - name: Run Robot Framework tests
         env:
           DD_API_KEY: ${{secrets.DD_API_KEY}}
+          HOME: /root
         run: robot -d results/ -v BROWSER:${{vars.BROWSER}} --listener allure_robotframework:allure-results tests/tests.robot
       - name: Save environment info
         if: always()
