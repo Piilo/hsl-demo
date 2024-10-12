@@ -1,6 +1,6 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"failed","Sat Oct 12 10:08:25 GMT 2024","Sat Oct 12 10:08:28 GMT 2024","2486","","Tests","","","","Search Routes And Check Same Routes Can Be Found From UI And API","Search routes from API and UI with specific name and
+"failed","Sat Oct 12 10:12:36 GMT 2024","Sat Oct 12 10:12:36 GMT 2024","4","","Tests","","","","Flaky Tests Which Sometimes Passes And Sometimes Fails","Just for demonstration purposes"
+"failed","Sat Oct 12 10:12:34 GMT 2024","Sat Oct 12 10:12:36 GMT 2024","2570","","Tests","","","","Search Routes And Check Same Routes Can Be Found From UI And API","Search routes from API and UI with specific name and
 check that results matches."
-"failed","Sat Oct 12 10:08:20 GMT 2024","Sat Oct 12 10:08:25 GMT 2024","5215","","Tests","","","","Check Available Bike Count Matchec Between UI And API","Reads bike count for specific bike station from the API and UI
+"failed","Sat Oct 12 10:12:27 GMT 2024","Sat Oct 12 10:12:34 GMT 2024","7133","","Tests","","","","Check Available Bike Count Matchec Between UI And API","Reads bike count for specific bike station from the API and UI
 and checks that bike count matches between UI and API."
-"passed","Sat Oct 12 10:08:28 GMT 2024","Sat Oct 12 10:08:28 GMT 2024","3","","Tests","","","","Flaky Tests Which Sometimes Passes And Sometimes Fails","Just for demonstration purposes"
