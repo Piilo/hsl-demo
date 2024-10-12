@@ -8,7 +8,7 @@ on:
       - 'resources/**'
 jobs:
   Run_tests_and_create_report:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container: ghcr.io/piilo/hsl-demo/ta_base_image:latest
     steps:
       - uses: actions/checkout@v4
