@@ -50,6 +50,9 @@ I Open HSL Web Page
     [Documentation]    Open browser and open HSL web page. Allow cookies if asked.
     New Browser    ${BROWSER}    headless=${HEADLESS}
     Set Browser Timeout    25s
+    VAR    ${user_agent}
+    ...    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+    New Context    userAgent=${user_agent}
     New Page    ${UI_URL}
     ${Cookie_banner_visible}    Run Keyword And Return Status    Get Element States
     ...    ${ACCCEPT_COOKIES_BTN}
