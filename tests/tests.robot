@@ -49,4 +49,3 @@ Flaky Tests Which Sometimes Passes And Sometimes Fails
     ...    allure.label.feature:demonstration
     ...    allure.label.story:flaky_test
     Given Pass Or Fail Randomly
-
