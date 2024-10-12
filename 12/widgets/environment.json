@@ -1,1 +1,0 @@
-[{"values":["chromium robot --version grep -E ^(VERSION|NAME)= /etc/os-release"],"name":"Browser"}]
