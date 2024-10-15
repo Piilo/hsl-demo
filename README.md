@@ -27,7 +27,7 @@ Examples are for linux (Ubuntu) environment
         pip install -r requirements.txt
 
 * [Initialize the Browser library](https://robotframework-browser.org/#installation), follow the steps
-* If you want use Allure, install also Java and [Allure](https://allurereport.org/docs/gettingstarted-installation/)
+* If you want use Allure, install also Java and [Allure](https://allurereport.org/docs/install/)
 
 Run tests with Allure, example:
 
