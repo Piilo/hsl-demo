@@ -6,7 +6,8 @@ This is small example project showing how to use [HSL open data routing API](htt
 
 ## Allure report
 
-[Report can be found here](https://piilo.github.io/hsl-demo)
+* [Most recent successful run]((https://piilo.github.io/hsl-demo/24/index.html#))
+* [Latest run](https://piilo.github.io/hsl-demo)
 
 ## Usage
 
